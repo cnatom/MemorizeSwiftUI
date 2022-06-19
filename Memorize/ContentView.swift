@@ -5,76 +5,61 @@
 //  Created by atom on 2022/5/14.
 //
 
+
+
 import SwiftUI
 
 struct ContentView: View {
-    
-    var emojis = ["1","2","3","4","5","6","7","8","9","10",
-                  "11","12","13","14","15","16","17","18","19","20","21"]
-    @State var count = 21
+    // @ObservedObject使View跟踪viewModel的变换并刷新UI
+    @ObservedObject var viewModel: EmojiMemoryGame
+
     var body: some View {
-        VStack{
-            //卡片布局
-            ScrollView {
-                LazyVGrid(columns:[GridItem(.adaptive(minimum: 100, maximum: 100))]){
-                    ForEach(emojis[0..<count],id: \.self){ emoji in
-                        MyCardView(emoji: emoji).aspectRatio(2/3,contentMode: .fit)
-                    }
-                }.foregroundColor(.blue)
-            }
-            Spacer()
-            //底栏
-            HStack{
-                Button{
-                    if count<emojis.count{
-                        self.count+=1
-                    }
-                } label: {
-                    Image(systemName: "plus.circle")
-                    
+        ScrollView {
+            LazyVGrid(columns:[GridItem(.adaptive(minimum: 65))]){
+                ForEach(viewModel.cards){ card in
+                    MyCardView(card: card)
+                        .aspectRatio(2/3,contentMode: .fit)
+                        .onTapGesture {
+                            // View向ViewModel发送改变Model的通知
+                            viewModel.choose(card)
+                        }
                 }
-                Spacer()
-                Button(action: {
-                    if count>1{
-                        self.count-=1
-                    }
-                }, label: {Image(systemName: "minus.circle")}
-                )
             }
-        }.padding()
+        }
+        .foregroundColor(.blue)
+        .padding()
         
     }
-func myFunction(){
     
 }
-}
 struct MyCardView: View{
-    var emoji: String
-    @State var hide: Bool = false
-    //    var hide: Bool { return true }
+    let card: MemoryGame<String>.Card
+    
     var body: some View{
-        let shape = RoundedRectangle(cornerRadius: 25)
         ZStack{
-            shape.stroke()
-            Text(emoji)
-            if hide {
-                shape.fill().foregroundColor(.blue)
+            let shape = RoundedRectangle(cornerRadius: 20)
+            if card.isFaceUp{
+                // 正面朝上
+                shape.fill().foregroundColor(.white)
+                shape.strokeBorder(lineWidth: 3)
+                Text(card.content).font(.largeTitle)
+            }else if card.isMatched{
+                // 成功匹配的卡片
+                shape.opacity(0)
+            }else{
+                // 反面朝上
+                shape.fill()
             }
-        }.onTapGesture {
-            hide = !hide
         }
     }
 }
 
-
-
-
-
-
+// Xcode预览UI
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().preferredColorScheme(.light)
-        ContentView().preferredColorScheme(.dark)
+        let game = EmojiMemoryGame()
+        ContentView(viewModel: game).preferredColorScheme(.light)
+        ContentView(viewModel: game).preferredColorScheme(.dark)
     }
 }
 
