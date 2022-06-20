@@ -18,7 +18,7 @@ class EmojiMemoryGame: ObservableObject{
     
     //创建一个Model
     static func createMemoryGame() -> MemoryGame<String> {
-        return MemoryGame<String>(numberOfPairsOfCards: 3, createCardContent: {
+        return MemoryGame<String>(numberOfPairsOfCards: 10, createCardContent: {
             // 定义中：createCardContent: (Int) -> CardContend //CardContend是一个泛型
             // 因此，此处会自动识别类型，将
             // index in 识别为 (index: Int) -> String in
@@ -28,6 +28,7 @@ class EmojiMemoryGame: ObservableObject{
     }
     
     // @Published使得model每次改变时，都会发送UI刷新公告 objectWillChange.send()
+    // Swift能够检测到struct中的变化，在class中无法这样做
     @Published private var model: MemoryGame<String> = createMemoryGame()
     
     
