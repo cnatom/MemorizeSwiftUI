@@ -68,8 +68,8 @@ struct MemoryGame<CardContend> where CardContend: Equatable{
     struct Card: Identifiable{
         var isFaceUp: Bool = false
         var isMatched: Bool = false
-        var content : CardContend
-        var id: Int
+        let content : CardContend // 卡片的内容不需要改变 let
+        let id: Int
     }
 }
 

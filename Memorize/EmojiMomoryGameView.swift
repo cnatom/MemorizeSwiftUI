@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  EmojiMomoryGameView.swift
 //  Memorize
 //
 //  Created by atom on 2022/5/14.
@@ -9,7 +9,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct EmojiMomoryGameView: View {
     // @ObservedObject使View跟踪viewModel的变换并刷新UI
     @ObservedObject var viewModel: EmojiMemoryGame
 
@@ -58,8 +58,8 @@ struct MyCardView: View{
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let game = EmojiMemoryGame()
-        ContentView(viewModel: game).preferredColorScheme(.light)
-        ContentView(viewModel: game).preferredColorScheme(.dark)
+        EmojiMomoryGameView(viewModel: game).preferredColorScheme(.light)
+        EmojiMomoryGameView(viewModel: game).preferredColorScheme(.dark)
     }
 }
 
