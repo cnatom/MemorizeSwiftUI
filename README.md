@@ -1,4 +1,4 @@
-# Stanford SwiftUI 2.0 课程实例：拼图游戏
+# Stanford SwiftUI 2.0 课程实例：消消乐游戏
 
 ## 简介
 
@@ -6,7 +6,7 @@
 
 - 课程链接：[https://www.bilibili.com/video/BV1q64y1d7x5](https://www.bilibili.com/video/BV1q64y1d7x5)
 
-- 本仓库随学习进度更新，按照章节创建分支
+- 本仓库随学习进度更新，按照章节创建分支。假如你现在学到了Chapter 4，请切换到Chapter 4分支。
 - 与博客专栏同步更新，专栏地址：[https://blog.csdn.net/qq_15989473/category_11819373.html](https://blog.csdn.net/qq_15989473/category_11819373.html)
 
 ## 目录
@@ -18,6 +18,8 @@
 - [**Chapter 3**](https://blog.csdn.net/qq_15989473/article/details/124874827) :  `MVVM架构`、`struct`、`class`、`泛型`、`函数`、`MVVM实例`
 
 - [**Chapter 4**](https://blog.csdn.net/qq_15989473/article/details/125365130) :  `enum`、`Optional`、`更新后的MVVM实例`
+
+- [**Chapter 5**](https://blog.csdn.net/qq_15989473/article/details/125417929) :  `扩展extension`、`属性观察器Property Observers`、`View布局机制`、`获取父组件大小`、`自定义View`
 
 ## 维护者
 
