@@ -11,17 +11,17 @@ import SwiftUI
 
 struct EmojiMomoryGameView: View {
     // @ObservedObject使View跟踪viewModel的变换并刷新UI
-    @ObservedObject var viewModel: EmojiMemoryGame
+    @ObservedObject var game: EmojiMemoryGame
 
     var body: some View {
         ScrollView {
             LazyVGrid(columns:[GridItem(.adaptive(minimum: 65))]){
-                ForEach(viewModel.cards){ card in
-                    MyCardView(card: card)
+                ForEach(game.cards){ card in
+                    MyCardView(card)
                         .aspectRatio(2/3,contentMode: .fit)
                         .onTapGesture {
                             // View向ViewModel发送改变Model的通知
-                            viewModel.choose(card)
+                            game.choose(card)
                         }
                 }
             }
@@ -33,7 +33,13 @@ struct EmojiMomoryGameView: View {
     
 }
 struct MyCardView: View{
-    let card: MemoryGame<String>.Card
+    // 在EmojiMemoryGame中，Card是MemoryGame<String>.Card的别名
+    // 因此此处相当于 let card: EmojiMemoryGame.MemoryGame<String>.Card
+    private let card: EmojiMemoryGame.Card
+    
+    init(_ card: EmojiMemoryGame.Card){
+        self.card = card
+    }
     
     var body: some View{
         ZStack{
@@ -58,8 +64,8 @@ struct MyCardView: View{
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let game = EmojiMemoryGame()
-        EmojiMomoryGameView(viewModel: game).preferredColorScheme(.light)
-        EmojiMomoryGameView(viewModel: game).preferredColorScheme(.dark)
+        EmojiMomoryGameView(game: game).preferredColorScheme(.light)
+        EmojiMomoryGameView(game: game).preferredColorScheme(.dark)
     }
 }
 

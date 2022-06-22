@@ -10,6 +10,10 @@ import SwiftUI
 //ViewModel
 //ObservableObject 使得 @Published 修饰的变量改变时，会发送UI刷新公告
 class EmojiMemoryGame: ObservableObject{
+    
+    //为MemoryGame<String>.Card创建一个别名：Card，减少代码量
+    typealias Card = MemoryGame<String>.Card
+    
     //static类型变量的初始化顺序在普通var之前
     //因此static的类成员可以作为其他类成员的默认值使用
     //如 var a = EmojiMemoryGame.emojis[1]
@@ -29,16 +33,15 @@ class EmojiMemoryGame: ObservableObject{
     
     // @Published使得model每次改变时，都会发送UI刷新公告 objectWillChange.send()
     // Swift能够检测到struct中的变化，在class中无法这样做
-    @Published private var model: MemoryGame<String> = createMemoryGame()
+    @Published private var model = createMemoryGame()
     
-    
-    var cards: Array<MemoryGame<String>.Card>{
+    var cards: Array<Card>{
         return model.cards
     }
     
     // MARK: - Intent(s)
     // 向Model发送从View接收到的指令
-    func choose(_ card: MemoryGame<String>.Card){
+    func choose(_ card: Card){
         //objectWillChange.send()
         model.choose(card)
     }
