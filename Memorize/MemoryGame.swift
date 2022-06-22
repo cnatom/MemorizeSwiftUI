@@ -12,27 +12,16 @@ import SwiftUI
 //where CardContend: Equatable 使得CardContent之间可以使用==
 struct MemoryGame<CardContend> where CardContend: Equatable{
     
+
     //private(set) 代表只读
     private(set) var cards: Array<Card>
     
     // 正面朝上的卡片索引,这是一个“计算变量”
     private var indexOfTheOneAndOnlyFaceUpCard: Int?{
         // get方法
-        get {
-            let faceUpCardIndices = cards.indices.filter({cards[$0].isFaceUp == true}) // 函数式编程，提取出所有正面朝上的卡片索引
-            return faceUpCardIndices.oneAndOnly
-
-        }
+        get { cards.indices.filter({cards[$0].isFaceUp}).oneAndOnly }
         // set方法  indexOfTheOneAndOnlyFaceUpCard = 2 ,则第3张卡片正面朝上，其他全部反面朝上
-        set {
-            for index in cards.indices {
-                if index != newValue {
-                    cards[index].isFaceUp = false
-                } else {
-                    cards[index].isFaceUp = true
-                }
-            }
-        }
+        set { cards.indices.forEach({cards[$0].isFaceUp = $0 == newValue}) }
     }
     
     init(numberOfPairsOfCards: Int,createCardContent: (Int) -> CardContend){
@@ -95,7 +84,7 @@ extension Array {
     ///var a: Array<Int> = [1]
     ///print(a.oneAndArray) // output:1
     ///```
-    var oneAndOnly: Element? {
+    var oneAndOnly: Element? { // 该计算变量的类型为泛型
         if self.count == 1 {
             return self.first
         } else {
