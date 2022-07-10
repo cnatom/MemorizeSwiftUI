@@ -14,18 +14,19 @@ struct EmojiMomoryGameView: View {
     @ObservedObject var game: EmojiMemoryGame
 
     var body: some View {
-        ScrollView {
-            LazyVGrid(columns:[GridItem(.adaptive(minimum: 60))]){
-                ForEach(game.cards){ card in
-                    MyCardView(card)
-                        .aspectRatio(2/3,contentMode: .fit)
-                        .onTapGesture {
-                            // View向ViewModel发送改变Model的通知
-                            game.choose(card)
-                        }
-                }
+        AspectVGrid(items: game.cards, aspectRatio: 2/3, content: {
+            card in
+            if card.isMatched && !card.isFaceUp {
+                Rectangle().opacity(0)
+            } else {
+                MyCardView(card)
+                    .padding(4)
+                    .onTapGesture {
+                        // View向ViewModel发送改变Model的通知
+                        game.choose(card)
+                    }
             }
-        }
+        })
         .foregroundColor(.blue)
         .padding()
         

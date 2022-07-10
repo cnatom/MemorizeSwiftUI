@@ -70,7 +70,7 @@ struct MemoryGame<CardContend> where CardContend: Equatable{
     //MemoryGame<CardContent>.Card
     //Identifiable:使每一个Card独一无二，可以被Foreach唯一识别
     struct Card: Identifiable{
-        var isFaceUp = false
+        var isFaceUp = true
         var isMatched = false
         let content : CardContend
         let id: Int
