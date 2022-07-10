@@ -11,7 +11,7 @@ struct AspectVGrid<Item,ItemView>: View where ItemView: View, Item: Identifiable
     var items: [Item]
     var aspectRatio: CGFloat
     var content: (Item) -> ItemView
-    // @escaping :避免struct复制函数而浪费内存
+    // @escaping :struct是复制型的，而content是一个指向外部函数的引用，因此要加escaping
     // @ViewBuilder :使content可以被传入一个 if(){ return Example1View() }else{ return Example2View() } 类似的复杂函数
     init(items: [Item], aspectRatio: CGFloat,@ViewBuilder content: @escaping (Item) -> ItemView) {
         self.items = items

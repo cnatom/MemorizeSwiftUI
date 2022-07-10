@@ -52,6 +52,7 @@ struct MyCardView: View{
                     // 正面朝上
                     shape.fill().foregroundColor(.white)
                     shape.strokeBorder(lineWidth: Params.lineWidth)
+                    Pie(startAngle: Angle(degrees: 0-90), endAngle: Angle(degrees: 110-90)).padding(5).opacity(0.5) // 自定义Shape
                     Text(card.content).font(font(size: geometry.size)) // emoji的大小会根据容器宽度的大小变化
                 }else if card.isMatched{
                     // 成功匹配的卡片
@@ -69,19 +70,20 @@ struct MyCardView: View{
     }
     /// 单个卡片的View参数
     private struct Params {
-        static let cornerRadius: CGFloat = 20.0
+        static let cornerRadius: CGFloat = 10.0
         static let lineWidth: CGFloat = 3
-        static let fontScale: CGFloat = 0.5
+        static let fontScale: CGFloat = 0.7
     }
 
 }
 
 // Xcode预览UI
 struct ContentView_Previews: PreviewProvider {
+
     static var previews: some View {
         let game = EmojiMemoryGame()
-        EmojiMomoryGameView(game: game).preferredColorScheme(.light)
-        EmojiMomoryGameView(game: game).preferredColorScheme(.dark)
+        game.choose(game.cards.first!)
+        return EmojiMomoryGameView(game: game).preferredColorScheme(.light)
     }
 }
 
