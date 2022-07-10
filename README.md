@@ -1,3 +1,13 @@
+<!--
+ * @Author: 阿腾木 cnatom@foxmail.com
+ * @Date: 2022-06-22 22:51:36
+ * @LastEditors: 阿腾木 cnatom@foxmail.com
+ * @LastEditTime: 2022-07-10 23:44:50
+ * @FilePath: /Memorize/README.md
+ * @Description: 
+ * 
+ * Copyright (c) 2022 by 阿腾木 cnatom@foxmail.com, All Rights Reserved. 
+-->
 # Stanford SwiftUI 2.0 课程实例：消消乐游戏
 
 ## 简介
@@ -21,6 +31,7 @@
 
 - [**Chapter 5**](https://blog.csdn.net/qq_15989473/article/details/125417929) :  `扩展extension`、`属性观察器Property Observers`、`View布局机制`、`获取父组件大小`、`自定义View`
 
+- [**Chaper 6**](https://blog.csdn.net/qq_15989473/article/details/125630573) : `协议protocol`、`多继承`、`限制泛型`、`限制extension`、`限制函数参数类型`、`代码共享`
 ## 维护者
 
 [@ccatom](https://github.com/cnatom)
