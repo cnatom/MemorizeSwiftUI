@@ -18,11 +18,12 @@ struct Cardify: ViewModifier {
                 // 正面朝上
                 shape.fill().foregroundColor(.white)
                 shape.strokeBorder(lineWidth: DrawingConstants.lineWidth)
-                content
             }else{
                 // 反面朝上
                 shape.fill()
             }
+            content
+                .opacity(isFaceUp ? 1 : 0)
         }
     }
     private struct DrawingConstants {

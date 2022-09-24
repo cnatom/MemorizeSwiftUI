@@ -48,7 +48,11 @@ struct MyCardView: View{
         GeometryReader{ geometry in
             ZStack{
                 Pie(startAngle: Angle(degrees: 0-90), endAngle: Angle(degrees: 110-90)).padding(5).opacity(0.5) // 自定义Shape
-                Text(card.content).font(font(size: geometry.size)) // emoji的大小会根据容器宽度的大小变化
+                // emoji的大小会根据容器宽度的大小变化
+                Text(card.content)
+                    .rotationEffect(Angle.degrees(card.isMatched ? 360 : 0))
+                    .animation(.linear(duration: 1).repeatForever(autoreverses: false), value: card.isMatched)
+                    .font(font(size: geometry.size))
             }
             .cardify(isFaceUp: card.isFaceUp)
         }
