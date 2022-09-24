@@ -18,15 +18,26 @@ struct EmojiMomoryGameView: View {
         }
         .padding()
     }
-
+    
+    @State private var dealt = Set<Int>()
+    
+    private func deal(_ card: EmojiMemoryGame.Card){
+        dealt.insert(card.id)
+    }
+    
+    private func isUndealt(_ card :EmojiMemoryGame.Card) -> Bool{
+        return !dealt.contains(card.id)
+    }
+    
     var gameBody: some View {
-        AspectVGrid(items: game.cards, aspectRatio: 2 / 3, content: {
+        AspectVGrid(items: game.cards, aspectRatio: 2 / 3){
             card in
-            if card.isMatched && !card.isFaceUp {
+            if isUndealt(card) || card.isMatched && !card.isFaceUp {
                 Color.clear
             } else {
                 MyCardView(card)
                     .padding(4)
+                    .transition(AnyTransition.asymmetric(insertion: .scale, removal: .opacity)) // 卡片出现以及消失的动画
                     .onTapGesture {
                         // View向ViewModel发送改变Model的通知
                         withAnimation {
@@ -34,7 +45,15 @@ struct EmojiMomoryGameView: View {
                         }
                     }
             }
-        })
+        }
+        .onAppear{
+            // 在View出现时执行
+            withAnimation{
+                for card in game.cards{
+                    deal(card)
+                }
+            }
+        }
         .foregroundColor(.blue)
     }
 
