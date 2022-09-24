@@ -24,6 +24,10 @@ struct MemoryGame<CardContend> where CardContend: Equatable{
         set { cards.indices.forEach({cards[$0].isFaceUp = $0 == newValue}) }
     }
     
+    mutating func shuffle(){
+        self.cards.shuffle()
+    }
+    
     init(numberOfPairsOfCards: Int,createCardContent: (Int) -> CardContend){
         cards = []  // 此处相当于 cards = Array<Card>() swift自动判断类型
         for pairIndex in 0..<numberOfPairsOfCards{
@@ -31,6 +35,7 @@ struct MemoryGame<CardContend> where CardContend: Equatable{
             cards.append(Card(content: content, id: pairIndex*2))
             cards.append(Card(content: content, id: pairIndex*2+1))
         }
+        cards.shuffle()
     }
     
     // mutating使该函数能够改变struct的变量
