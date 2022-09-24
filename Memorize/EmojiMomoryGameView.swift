@@ -12,7 +12,7 @@ import SwiftUI
 struct EmojiMomoryGameView: View {
     // @ObservedObject使View跟踪viewModel的变换并刷新UI
     @ObservedObject var game: EmojiMemoryGame
-
+    
     var body: some View {
         AspectVGrid(items: game.cards, aspectRatio: 2/3, content: {
             card in
@@ -47,21 +47,10 @@ struct MyCardView: View{
         // 如 geometry.size.height : 父组件的高度
         GeometryReader{ geometry in
             ZStack{
-                let shape = RoundedRectangle(cornerRadius: Params.cornerRadius)
-                if card.isFaceUp{
-                    // 正面朝上
-                    shape.fill().foregroundColor(.white)
-                    shape.strokeBorder(lineWidth: Params.lineWidth)
-                    Pie(startAngle: Angle(degrees: 0-90), endAngle: Angle(degrees: 110-90)).padding(5).opacity(0.5) // 自定义Shape
-                    Text(card.content).font(font(size: geometry.size)) // emoji的大小会根据容器宽度的大小变化
-                }else if card.isMatched{
-                    // 成功匹配的卡片
-                    shape.opacity(0)
-                }else{
-                    // 反面朝上
-                    shape.fill()
-                }
+                Pie(startAngle: Angle(degrees: 0-90), endAngle: Angle(degrees: 110-90)).padding(5).opacity(0.5) // 自定义Shape
+                Text(card.content).font(font(size: geometry.size)) // emoji的大小会根据容器宽度的大小变化
             }
+            .cardify(isFaceUp: card.isFaceUp)
         }
     }
     /// emoji作为Font的大小
@@ -69,17 +58,15 @@ struct MyCardView: View{
         Font.system(size: min(size.height,size.width) * 0.5)
     }
     /// 单个卡片的View参数
-    private struct Params {
-        static let cornerRadius: CGFloat = 10.0
-        static let lineWidth: CGFloat = 3
+    private struct DrawingConstants {
         static let fontScale: CGFloat = 0.7
     }
-
+    
 }
 
 // Xcode预览UI
 struct ContentView_Previews: PreviewProvider {
-
+    
     static var previews: some View {
         let game = EmojiMemoryGame()
         game.choose(game.cards.first!)
