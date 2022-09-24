@@ -23,7 +23,7 @@ struct EmojiMomoryGameView: View {
         AspectVGrid(items: game.cards, aspectRatio: 2 / 3, content: {
             card in
             if card.isMatched && !card.isFaceUp {
-                Rectangle().opacity(0)
+                Color.clear
             } else {
                 MyCardView(card)
                     .padding(4)
@@ -38,7 +38,9 @@ struct EmojiMomoryGameView: View {
 
     var shuffle: some View {
         Button("Shuffle") {
-            game.shuffle()
+            withAnimation {
+                game.shuffle()
+            }
         }
     }
 }
