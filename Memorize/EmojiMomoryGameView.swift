@@ -29,7 +29,9 @@ struct EmojiMomoryGameView: View {
                     .padding(4)
                     .onTapGesture {
                         // View向ViewModel发送改变Model的通知
-                        game.choose(card)
+                        withAnimation {
+                            game.choose(card)
+                        }
                     }
             }
         })
