@@ -34,6 +34,8 @@
 - [**Chapter 7**](https://blog.csdn.net/qq_15989473/article/details/127019995) : `自定义ViewModifier`、`显式动画withAnimation`、`隐式动画.animation`
 
 
+- [**Chapter 8**](https://blog.csdn.net/qq_15989473/article/details/127041094) : `插值动画Animatable`、`三维旋转.rotation3DEffect`、`几何匹配.matchedGeometryEffect`
+
 ## 维护者
 
 [@ccatom](https://github.com/cnatom)
