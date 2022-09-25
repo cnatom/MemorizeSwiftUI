@@ -14,10 +14,10 @@ struct EmojiMomoryGameView: View {
     @Namespace private var dealingNamespace
 
     var body: some View {
-        ZStack(alignment: .bottom){
+        ZStack(alignment: .bottom) {
             VStack {
                 gameBody
-                HStack{
+                HStack {
                     restart
                     Spacer()
                     shuffle
@@ -46,7 +46,7 @@ struct EmojiMomoryGameView: View {
         }
         return Animation.easeInOut(duration: CardConstants.dealDuration).delay(delay)
     }
-    
+
     private func zIndex(of card: EmojiMemoryGame.Card) -> Double {
         -Double(game.cards.firstIndex(where: { item in
             item.id == card.id
@@ -67,7 +67,6 @@ struct EmojiMomoryGameView: View {
                     .onTapGesture {
                         withAnimation {
                             game.choose(card) // View向ViewModel发送改变Model的通知
-
                         }
                     }
             }
@@ -104,10 +103,10 @@ struct EmojiMomoryGameView: View {
             }
         }
     }
-    
+
     var restart: some View {
-        Button("重新开始"){
-            withAnimation{
+        Button("重新开始") {
+            withAnimation {
                 dealt = []
                 game.restart()
             }
@@ -128,17 +127,34 @@ struct MyCardView: View {
     // 在EmojiMemoryGame中，Card是MemoryGame<String>.Card的别名
     // 因此此处相当于 let card: EmojiMemoryGame.MemoryGame<String>.Card
     private let card: EmojiMemoryGame.Card
-
+    
     init(_ card: EmojiMemoryGame.Card) {
         self.card = card
     }
+
+    @State private var animatedBonusRemaining: Double = 0
 
     var body: some View {
         // GeometryReader可以通过获取父组件的大小来调整子组件的样式
         // 如 geometry.size.height : 父组件的高度
         GeometryReader { geometry in
             ZStack {
-                Pie(startAngle: Angle(degrees: 0 - 90), endAngle: Angle(degrees: 110 - 90)).padding(5).opacity(0.5) // 自定义Shape
+                // 倒计时动画圆盘
+                Group {
+                    if card.isConsumingBonusTime {
+                        Pie(startAngle: Angle(degrees: 0 - 90), endAngle: Angle(degrees: (1 - animatedBonusRemaining) * 360 - 90))
+                            .onAppear{
+                                animatedBonusRemaining = card.bonusRemaining // 倒计时开始
+                                withAnimation(.linear(duration: card.bonusTimeRemaining)) {
+                                    animatedBonusRemaining = 0 // 倒计时通过动画慢慢结束
+                                }
+                            }
+                    } else {
+                        Pie(startAngle: Angle(degrees: 0 - 90), endAngle: Angle(degrees: (1 - card.bonusRemaining) * 360 - 90))
+                    }
+                }
+                .padding(5)
+                .opacity(0.5)
                 // emoji的大小会根据容器宽度的大小变化
                 Text(card.content)
                     .rotationEffect(Angle.degrees(card.isMatched ? 360 : 0))

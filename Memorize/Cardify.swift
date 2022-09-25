@@ -13,7 +13,7 @@ struct Cardify: Animatable,ViewModifier {
         rotation = isFaceUp ? 0 : 180
     }
     
-    // 实现Animatable协议中的变量，值会慢慢的改变，从而动画也会慢慢的展示
+    // 告诉Animatable协议，哪些变量需要插值
     var animatableData: Double{
         get { rotation }
         set { rotation = newValue }
